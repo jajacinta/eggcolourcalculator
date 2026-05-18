@@ -1,15 +1,19 @@
 # jajacinta.github.io
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chicken Egg Genetic Dashboard</title>
+    <!-- SEO Description for Search Engines -->
+    <meta name="description" content="An interactive Punnett square calculator to predict chicken egg shell colors based on parent genetics. Supports blue, green, olive, white, tan, and brown traits.">
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #121212; color: #e0e0e0; padding: 10px; margin: 0; }
         .container { max-width: 900px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         h2 { text-align: center; color: #f0e68c; letter-spacing: 1px; margin-bottom: 5px; }
-        .subtitle { text-align: center; font-size: 0.8em; color: #888; margin-bottom: 20px; }
+        .subtitle { text-align: center; font-size: 0.8em; color: #888; margin-bottom: 15px; }
+        /* Style for the new visible website description */
+        .site-description { text-align: center; font-size: 0.95em; color: #b0b0b0; max-width: 700px; margin: 0 auto 25px auto; line-height: 1.5; }
         
         .inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #252525; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
         label { color: #4A90E2; font-size: 11px; font-weight: bold; text-transform: uppercase; }
@@ -44,15 +48,20 @@
         .results-list { display: flex; flex-direction: column; gap: 10px; }
         .bar-container { background: #121212; border-radius: 20px; height: 30px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid #333; }
         .bar-fill { height: 100%; transition: width 0.8s ease-in-out; }
-        .bar-label { position: absolute; left: 12px; font-size: 13px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .bar-label { position: absolute; left: 12px; font-size: 13px; font-weight: bold; }
         .bar-percent { position: absolute; right: 12px; font-size: 12px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2> Egg Genetic Visualizer</h2>
+    <h2>Egg Colour Calculator</h2>
     <div class="subtitle">W = Blue Shell | B = Brown Coating (1 Cap = Green, 2 Caps = Olive)</div>
+    
+    <!-- Visible description added directly to the page interface -->
+    <p class="site-description">
+        Welcome to the Chicken Egg Genetic Dashboard! This tool maps the genetic outcomes of breeding pairs to predict the shell colors of their offspring. Input the parent genotypes below to generate an interactive 4x4 Punnett square map, visual egg chart, and statistical probabilities.
+    </p>
     
     <div class="inputs">
         <div>
@@ -78,12 +87,13 @@
 </div>
 
 <script>
+    // Updated color settings: Using dark text (#121212) on light colors so text is visible!
     const COLORS = {
-        blue: { name: "Blue", hex: "#AEDFF7", text: "#fff" },
-        green: { name: "Green", hex: "#A7D49B", text: "#fff" },
+        blue: { name: "Blue", hex: "#AEDFF7", text: "#121212" },
+        green: { name: "Green", hex: "#A7D49B", text: "#121212" },
         olive: { name: "Olive", hex: "#6B8E23", text: "#fff" },
-        white: { name: "White", hex: "#FFFFFF", text: "#fff" },
-        tan: { name: "Tan", hex: "#D2B48C", text: "#fff" },
+        white: { name: "White", hex: "#FFFFFF", text: "#121212" },
+        tan: { name: "Tan", hex: "#D2B48C", text: "#121212" },
         brown: { name: "Brown", hex: "#8B4513", text: "#fff" }
     };
 
@@ -166,4 +176,3 @@
 </script>
 </body>
 </html>
-        
