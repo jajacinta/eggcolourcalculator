@@ -16,7 +16,8 @@
         
         .inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #252525; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #333; }
         label { color: #4A90E2; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        input { width: 100%; padding: 12px; background: #121212; border: 1px solid #444; border-radius: 8px; color: #fff; font-size: 16px; box-sizing: border-box; margin-top: 5px; }
+        input, select { width: 100%; padding: 12px; background: #121212; border: 1px solid #444; border-radius: 8px; color: #fff; font-size: 16px; box-sizing: border-box; margin-top: 5px; }
+        select { cursor: pointer; font-size: 14px; }
         button { width: 100%; padding: 15px; background: #4A90E2; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 16px; box-shadow: 0 4px 0 #2a6db8; }
 
         .scroll-wrapper { overflow-x: auto; margin: 20px 0; border-radius: 10px; border: 1px solid #333; }
@@ -49,6 +50,23 @@
         .bar-fill { height: 100%; transition: width 0.8s ease-in-out; }
         .bar-label { position: absolute; left: 12px; font-size: 13px; font-weight: bold; }
         .bar-percent { position: absolute; right: 12px; font-size: 12px; font-weight: bold; color: #fff; }
+
+        /* Styles for the Collapsible Dropdowns */
+        details { background: #252525; border: 1px solid #333; border-radius: 10px; margin: 15px 0; padding: 10px; transition: background 0.3s ease; }
+        details[open] { background: #2a2a2a; padding: 15px; }
+        summary { font-weight: bold; color: #f0e68c; cursor: pointer; padding: 5px; font-size: 1rem; outline: none; user-select: none; }
+        .tutorial-content { margin-top: 15px; font-size: 0.9em; line-height: 1.6; color: #ccc; }
+        .tutorial-content h4 { color: #4A90E2; margin: 15px 0 5px 0; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        .mini-grid-wrap { overflow-x: auto; margin: 10px 0; border-radius: 6px; border: 1px solid #444; }
+        .mini-grid-wrap table { min-width: 250px; }
+        .mini-grid-wrap th { background: #1c1c1c; font-size: 11px; }
+        .mini-grid-wrap td { font-size: 11px; padding: 8px; background: #121212; color: #fff; }
+
+        /* Breed helper specific container style */
+        .breed-helper-ui { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
+        @media (min-width: 600px) {
+            .breed-helper-ui { grid-template-columns: 1fr 2fr 2fr; }
+        }
     </style>
 </head>
 <body>
@@ -57,10 +75,71 @@
     <h2>Egg Colour Calculator</h2>
     <div class="subtitle">ww = White Shell Gene |  WW/Ww = Blue Shell Gene | BB/Bb = Tan/Brown Topcoat (Bb = Green, BB = Olive)</div>
     
-    <!-- Visible description added directly to the page interface -->
     <p class="site-description">
-        Punnett Square Calculator that will calculate all possible chicken egg colours based on parental genotypes. Will generate a 2x2, 4x4 or 8x8 Punnett Square, visual egg colour map and probabilites.
+        Punnett Square Calculator that will calculate all possible chicken egg colours based on parental genotypes. Will generate a 2x2, 4x4 or 8x8 Punnett Square, visual egg colour map and probabilities.
     </p>
+
+    <details>
+        <summary How to Use & Genotype Examples (Click to Expand)</summary>
+        <div class="tutorial-content">
+            <p>Type the gene letter combinations for both parents into the input fields below. Depending on how many traits you want to track, you can enter 2, 4, or 6 letters to map different grid scales:</p>
+            
+            <h4>1. Single Trait Example (Monohybrid Cross 2x2)</h4>
+            <p>Tracks just one gene group (e.g., shell base color Blue <strong>Ww x Ww</strong> ; <strong>Parent 1: Ww  &  Parent 2: Ww</strong>). Generates 4 unique outcomes.</p>
+            <div class="mini-grid-wrap">
+                <table>
+                    <tr><th></th><th>W</th><th>w</th></tr>
+                    <tr><th>W</th><td>WW (Blue)</td><td>Ww (Blue)</td></tr>
+                    <tr><th>w</th><td>Ww (Blue)</td><td>ww (White)</td></tr>
+                </table>
+            </div>
+
+            <h4>2. Two Traits Example (Dihybrid Cross 4x4)</h4>
+            <p>Tracks shell base color and brown topcoat depth (e.g., Green <strong>WwBb × WwBb</strong>). Generates 16 calculation paths mapping blues, greens, olives, whites, tans, and deep browns.</p>
+            <div class="mini-grid-wrap">
+                <table>
+                    <tr><th></th><th>WB</th><th>Wb</th><th>wB</th><th>wb</th></tr>
+                    <tr><th>WB</th><td>WWBB (Olive)</td><td>WWBb (Green)</td><td>WwBB (Olive)</td><td>WwBb (Green)</td></tr>
+                    <tr><th>wb</th><td>WwBb (Green)</td><td>Wwbb (Blue)</td><td>wwBb (Tan)</td><td>wwbb (White)</td></tr>
+                </table>
+            </div>
+
+            <h4>3. Three Traits Modifier Example (Trihybrid Cross 8x8)</h4>
+            <p>Tracks shell base colour (White (ww) or Blue (WW/Ww)), brown topcoat (Brown (BB) or Tan (Bb)) , plus an optional third density modifier gene (CC/Cc) (e.g., <strong>WwBbCc × WwBbCc</strong>). Generates 64 matrix calculations for ultra-precise shade probabilitys.</p>
+        </div>
+    </details>
+
+    <details>
+        <summary>What genotype is my chicken? (Breed Selection Helper)</summary>
+        <div class="breed-helper-ui">
+            <div>
+                <label>Matrix Scale</label>
+                <select id="scale-selector" onchange="updateBreedHelperValues()">
+                    <option value="2x2">2x2 (Single Trait)</option>
+                    <option value="4x4" selected>4x4 (Two Traits)</option>
+                    <option value="8x8">8x8 (Three Traits)</option>
+                </select>
+            </div>
+            <div>
+                <label>Parent 1 Breed Match</label>
+                <select id="p1-breed-select" onchange="applyBreedSelection('p1')">
+                    <option value="" disabled selected>-- Select Parent 1 Breed --</option>
+                    <option value="placeholder">Breed 1 Placeholder</option>
+                    <option value="placeholder">Breed 2 Placeholder</option>
+                    <option value="placeholder">Breed 3 Placeholder</option>
+                </select>
+            </div>
+            <div>
+                <label>Parent 2 Breed Match</label>
+                <select id="p2-breed-select" onchange="applyBreedSelection('p2')">
+                    <option value="" disabled selected>-- Select Parent 2 Breed --</option>
+                    <option value="placeholder">Breed 1 Placeholder</option>
+                    <option value="placeholder">Breed 2 Placeholder</option>
+                    <option value="placeholder">Breed 3 Placeholder</option>
+                </select>
+            </div>
+        </div>
+    </details>
     
     <div class="inputs">
         <div>
@@ -77,7 +156,7 @@
     <div class="scroll-wrapper" id="square-output"></div>
 
     <div id="results-area">
-        <h3 style="text-align: center; color: #f0e68c; font-size: 1.1em; margin-bottom: 5px;">4x4 Offspring Map</h3>
+        <h3 style="text-align: center; color: #f0e68c; font-size: 1.1em; margin-bottom: 5px;">Egg Colour Map</h3>
         <div class="egg-visual-grid" id="egg-grid"></div>
         
         <h3 style="color: #f0e68c; font-size: 1.1em; margin-bottom: 10px;"> Statistics</h3>
@@ -86,7 +165,6 @@
 </div>
 
 <script>
-    // Updated color settings: Using dark text (#121212) on light colors so text is visible!
     const COLORS = {
         blue: { name: "Blue", hex: "#AEDFF7", text: "#121212" },
         green: { name: "Green", hex: "#A7D49B", text: "#121212" },
@@ -95,6 +173,23 @@
         tan: { name: "Tan", hex: "#D2B48C", text: "#121212" },
         brown: { name: "Brown", hex: "#8B4513", text: "#fff" }
     };
+
+    /* --- BEGIN BREED AUTOMATION SCRIPT --- */
+    function updateBreedHelperValues() {
+    // When the user changes the 2x2/4x4/8x8 scale, reset the dropdown selectors
+    document.getElementById('p1-breed-select').selectedIndex = 0;
+    document.getElementById('p2-breed-select').selectedIndex = 0;
+}
+
+    function applyBreedSelection(parentID) {
+        const dropdown = document.getElementById(`${parentID}-breed-select`);
+        const chosenGenotype = dropdown.value;
+        if(chosenGenotype) {
+            document.getElementById(parentID).value = chosenGenotype;
+            calculate();
+        }
+    }
+    /* --- END BREED AUTOMATION SCRIPT --- */
 
     function getPheno(genotype) {
         const hasW = genotype.substring(0, 2).includes('W');
@@ -151,11 +246,21 @@
         });
         document.getElementById('square-output').innerHTML = table + `</table>`;
 
+        const gridSize = Math.sqrt(gridArray.length);
+        const eggGridElement = document.getElementById('egg-grid');
+        eggGridElement.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+        eggGridElement.style.maxWidth = `${gridSize * 60 + 50}px`;
+
+        const resultsAreaHeading = document.querySelector('#results-area h3');
+        if (resultsAreaHeading) {
+            resultsAreaHeading.textContent = `${gridSize}x${gridSize} Egg Colour Map`;
+        }
+
         let gridHtml = "";
         gridArray.forEach(item => {
             gridHtml += `<div class="egg-icon" style="background:${item.hex}"></div>`;
         });
-        document.getElementById('egg-grid').innerHTML = gridHtml;
+        eggGridElement.innerHTML = gridHtml;
 
         let total = gam1.length * gam2.length;
         let statHtml = "";
