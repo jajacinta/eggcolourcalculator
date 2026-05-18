@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chicken Egg Genetic Dashboard</title>
+    <title>Chicken Egg Colour Calculator</title>
     <!-- SEO Description for Search Engines -->
     <meta name="description" content="An interactive Punnett square calculator to predict chicken egg shell colors based on parent genetics. Supports blue, green, olive, white, tan, and brown traits.">
     <style>
@@ -48,18 +48,18 @@
         .bar-container { background: #121212; border-radius: 20px; height: 30px; position: relative; overflow: hidden; display: flex; align-items: center; border: 1px solid #333; }
         .bar-fill { height: 100%; transition: width 0.8s ease-in-out; }
         .bar-label { position: absolute; left: 12px; font-size: 13px; font-weight: bold; }
-        .bar-percent { position: absolute; right: 12px; font-size: 12px; font-weight: bold; }
+        .bar-percent { position: absolute; right: 12px; font-size: 12px; font-weight: bold; color: #fff; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>Egg Colour Calculator</h2>
-    <div class="subtitle">W = Blue Shell | B = Brown Coating (1 Cap = Green, 2 Caps = Olive)</div>
+    <div class="subtitle">ww = White Shell Gene |  WW/Ww = Blue Shell Gene | BB/Bb = Tan/Brown Topcoat (Bb = Green, BB = Olive)</div>
     
     <!-- Visible description added directly to the page interface -->
     <p class="site-description">
-        Welcome to the Chicken Egg Genetic Dashboard! This tool maps the genetic outcomes of breeding pairs to predict the shell colors of their offspring. Input the parent genotypes below to generate an interactive 4x4 Punnett square map, visual egg chart, and statistical probabilities.
+        Punnett Square Calculator that will calculate all possible chicken egg colours based on parental genotypes. Will generate a 2x2, 4x4 or 8x8 Punnett Square, visual egg colour map and probabilites.
     </p>
     
     <div class="inputs">
@@ -166,7 +166,7 @@
                 <div class="bar-container">
                     <div class="bar-fill" style="width:${perc}%; background:${colorObj.hex}"></div>
                     <span class="bar-label" style="color:${colorObj.text}">${name}</span>
-                    <span class="bar-percent" style="color:${colorObj.text}">${perc}%</span>
+                    <span class="bar-percent" style="color: #fff">${perc}%</span>
                 </div>`;
         });
         document.getElementById('stat-list').innerHTML = statHtml;
